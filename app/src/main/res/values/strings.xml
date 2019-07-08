@@ -2,6 +2,6 @@
     <string name="app_name">TimeTracking</string>
     <string name="LabelStartTime">Startzeit:</string>
     <string name="LabelEndTime">Endzeit:</string>
-    <string name="StartButton">Start</string>
-    <string name="StopButton">Stop</string>
+    <string name="StartButton">Starten</string>
+    <string name="StopButton">Beenden</string>
 </resources>
