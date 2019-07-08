@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeTracking</string>
+    <string name="app_name">Zeiterfassung</string>
     <string name="LabelStartTime">Startzeit:</string>
     <string name="LabelEndTime">Endzeit:</string>
     <string name="StartButton">Starten</string>

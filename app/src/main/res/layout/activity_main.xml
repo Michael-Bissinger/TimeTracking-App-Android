@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/StartDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -36,10 +36,10 @@
         android:layout_marginStart="8dp"
         android:text="@string/LabelEndTime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/StartDateTime" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/EndDateTime"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         android:layout_marginStart="8dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/LabelEndTime" />
 
     <Button
-        android:id="@+id/StartButton"
+        android:id="@+id/StartCommand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -60,10 +60,10 @@
         android:text="@string/StartButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/EndDateTime" />
 
     <Button
-        android:id="@+id/StopButton"
+        android:id="@+id/EndCommand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -72,5 +72,5 @@
         android:text="@string/StopButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartButton" />
+        app:layout_constraintTop_toBottomOf="@+id/StartCommand" />
 </android.support.constraint.ConstraintLayout>
