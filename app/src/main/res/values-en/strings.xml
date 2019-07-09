@@ -5,4 +5,5 @@
     <string name="LabelStartTime">Starttime:</string>
     <string name="StartButton">Start</string>
     <string name="StopButton">End</string>
+    <string name="StartButtonClicked">Start clicked!</string>
 </resources>

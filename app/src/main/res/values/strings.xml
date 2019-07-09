@@ -4,4 +4,5 @@
     <string name="LabelEndTime">Endzeit:</string>
     <string name="StartButton">Starten</string>
     <string name="StopButton">Beenden</string>
+    <string name="StartButtonClicked">Gestartet!</string>
 </resources>
