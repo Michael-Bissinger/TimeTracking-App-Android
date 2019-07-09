@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Startbutton geklickt!", Toast.LENGTH_SHORT).show();
 
 
+                Calendar currentTime = Calendar.getInstance();
+                _startDateTime.setText(currentTime.getTime().toString());
+
+
 
             }
         });
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        _startCommand.setOnClickListener(null);
+        _endCommand.setOnClickListener(null);
 
 
     }
