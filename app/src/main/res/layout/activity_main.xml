@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/ActivityVerticalPadding"
+    android:paddingStart="@dimen/ActivityHorizontalPadding"
     android:paddingTop="@dimen/paddingTop"
     android:paddingEnd="@dimen/ActivityHorizontalPadding"
+    android:paddingBottom="@dimen/ActivityVerticalPadding"
     tools:context=".MainActivity">
 
     <TextView
