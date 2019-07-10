@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText _endDateTime;
     private Button _startCommand;
     private Button _endCommand;
+
+    private final DateFormat _dateTimeFormatter = DateFormat.getDateTimeInstance(
+            DateFormat.SHORT,
+            DateFormat.SHORT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Calendar currentTime = Calendar.getInstance();
-                _startDateTime.setText(currentTime.getTime().toString());
+                _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime();
 
 
 
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Calendar currentTime = Calendar.getInstance();
-                _endDateTime.setText(currentTime.getTime().toString());
+                _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime();
 
             }
         });
