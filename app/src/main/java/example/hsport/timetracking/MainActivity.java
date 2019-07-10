@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final DateFormat _dateTimeFormatter = DateFormat.getDateTimeInstance(
             DateFormat.SHORT,
-            DateFormat.SHORT);
+            DateFormat.LONG);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
