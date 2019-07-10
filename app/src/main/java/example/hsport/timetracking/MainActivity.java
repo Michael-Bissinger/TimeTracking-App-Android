@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Calendar currentTime = Calendar.getInstance();
-                _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime();
+                _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
 
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 Calendar currentTime = Calendar.getInstance();
-                _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime();
+                _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
             }
         });
