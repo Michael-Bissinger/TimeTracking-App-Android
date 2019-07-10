@@ -10,12 +10,6 @@ public class DbHelper  extends SQLiteOpenHelper {
 
     private static final String _DB_FILE_NAME = "time_tracking.db";
     private static final int _DB_VERSION = 1;
-    private static final String _CREATE_TABLE = "CREATE TABLE \"time_data\" (\n" +
-            "\t\"_id\"\tINTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-            "\t\"start_time\"\tTEXT NOT NULL,\n" +
-            "\t\"end_time\"\tTEXT\n" +
-            ")";
-
 
 
     public DbHelper(@Nullable Context context) {
@@ -27,7 +21,7 @@ public class DbHelper  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         Log.println(1,"Db created", "Db created");
-        db.execSQL(_CREATE_TABLE);
+        TimeDataTable.createTable(db);
 
     }
 
