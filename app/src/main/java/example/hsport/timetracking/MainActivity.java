@@ -61,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'HH:mm", Locale.GERMANY);
 
                 ContentValues values = new ContentValues();
-                values.put("start_time", dbFormat.format(currentTime.getTime()));
+                values.put("start_time", currentTime.getTime().toString());
+
+                // values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
+
 
                 // Actually put stuff in the database
                 db.insert(
