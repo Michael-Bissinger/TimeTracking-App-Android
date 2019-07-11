@@ -51,10 +51,11 @@ public class MainActivity extends AppCompatActivity {
                 Calendar currentTime = Calendar.getInstance();
                 _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
-
+                // Init database and dbhelper
                 DbHelper dbHelper = new DbHelper(getApplicationContext());
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+                // Prepare what is gonna be written in the database
                 ContentValues values = new ContentValues();
                 values.put("start_time", currentTime.getTime().toString());
 
