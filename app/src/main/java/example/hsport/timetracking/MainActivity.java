@@ -10,7 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import example.hsport.timetracking.db.DbHelper;
 
@@ -56,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 // Prepare what is gonna be written in the database
-                ContentValues values = new ContentValues();
-                values.put("start_time", currentTime.getTime().toString());
+                DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'HH:mm", Locale.GERMANY);
 
+                ContentValues values = new ContentValues();
+                values.put("start_time", dbFormat.format(currentTime.getTime()));
 
                 // Actually put stuff in the database
                 db.insert(
