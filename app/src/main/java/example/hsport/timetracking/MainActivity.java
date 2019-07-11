@@ -59,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
                 values.put("start_time", currentTime.getTime().toString());
 
 
+                // Actually put stuff in the database
+                db.insert(
+                        "time_data",
+                        null,
+                        values
+                );
+
+                // Close the database to save memory
+                db.close();
+                dbHelper.close();
+
+
             }
         });
 
