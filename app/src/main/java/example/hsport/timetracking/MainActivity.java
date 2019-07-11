@@ -1,5 +1,7 @@
 package example.hsport.timetracking;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+
+import example.hsport.timetracking.db.DbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 Calendar currentTime = Calendar.getInstance();
                 _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
+
+                DbHelper dbHelper = new DbHelper(getApplicationContext());
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                ContentValues values = new ContentValues();
+                values.put("start_time", currentTime.getTime().toString());
 
 
             }
