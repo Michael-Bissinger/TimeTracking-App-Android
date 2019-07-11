@@ -58,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
 
                 // Prepare what is gonna be written in the database
-                DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'HH:mm", Locale.GERMANY);
+                DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
 
                 ContentValues values = new ContentValues();
-                values.put("start_time", currentTime.getTime().toString());
+                //values.put("start_time", currentTime.getTime().toString());
 
-                // values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
+                values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
 
 
                 // Actually put stuff in the database
