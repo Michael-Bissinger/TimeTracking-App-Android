@@ -1,10 +1,14 @@
 package example.hsport.timetracking.db;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+
+import java.util.Locale;
 
 public class TimeDataProvider extends ContentProvider {
 
@@ -61,7 +65,39 @@ public class TimeDataProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+
+        // resolve uri
+        final int uriType = _URI_MATCHER.match(uri);
+
+        Uri insertUri = null;
+        long newItemId = -1;
+
+        // Determine action depending on uri
+        switch (uriType) {
+            case TimeDataTable.ITEM_LIST_ID:
+            case TimeDataTable.ITEM_ID:
+                SQLiteDatabase db = _dbHelper.getWritableDatabase();
+                newItemId = db.insert(TimeDataTable.TABLE_NAME, null, values);
+                db.close();
+                break;
+
+            default:
+                // if uri is unknown
+                throw new IllegalArgumentException(String.format(Locale.GERMANY, "Unknown URI: %s", uri));
+
+        }
+
+        // Dataset successfully created
+        if (newItemId > 0) {
+            // create URI
+            insertUri = ContentUris.withAppendedId(
+                    TimeDataContract.TimeData.CONTENT_URI,
+                    newItemId);
+
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return insertUri;
     }
 
     @Override
