@@ -58,7 +58,7 @@ public class TimeDataProvider extends ContentProvider {
                 break;
 
             case TimeDataTable.ITEM_ID:
-                final long id = ContentUris.parseId((uri);
+                final long id = ContentUris.parseId(uri);
                 data = db.query(TimeDataTable.TABLE_NAME, projection, _ID_WHERE, idAsArray(id),
                         null, null, null);
                 break;
