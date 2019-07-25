@@ -2,10 +2,29 @@ package example.hsport.timetracking.db;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
 public class TimeDataProvider extends ContentProvider {
+
+    private static final UriMatcher _URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+
+    static {
+        //Lookup for listing
+        _URI_MATCHER.addURI(
+                TimeDataContract.AUTHORITY,
+                TimeDataContract.TimeData.CONTENT_DIRECTORY,
+                TimeDataTable.ITEM_LIST_ID);
+
+        //Lookup for dataset
+        _URI_MATCHER.addURI(
+                TimeDataContract.AUTHORITY,
+                TimeDataContract.TimeData.CONTENT_DIRECTORY + "/#",
+                TimeDataTable.ITEM_ID);
+
+    }
+
     @Override
     public boolean onCreate() {
         return false;
