@@ -33,6 +33,7 @@ public class TimeDataProvider extends ContentProvider {
     }
 
     private DbHelper _dbHelper = null;
+    private static final String _ID_WHERE = BaseColumns._ID + "=?";
 
     @Override
     public boolean onCreate() {
@@ -41,9 +42,37 @@ public class TimeDataProvider extends ContentProvider {
         return true;
     }
 
+    @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
+                        @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+
+        final int uriType = _URI_MATCHER.match(uri);
+        Cursor data;
+        SQLiteDatabase db = _dbHelper.getReadableDatabase();
+
+        switch (uriType) {
+            case TimeDataTable.ITEM_LIST_ID:
+                data = db.query(TimeDataTable.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case TimeDataTable.ITEM_ID:
+                final long id = ContentUris.parseId((uri);
+                data = db.query(TimeDataTable.TABLE_NAME, projection, _ID_WHERE, idAsArray(id),
+                        null, null, null);
+                break;
+
+            default:
+                throw new IllegalArgumentException(String.format(Locale.GERMANY,
+                        "Unbekannte URI: %s", uri));
+        }
+
+        if (data != null) {
+            data.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+
+        return data;
     }
 
     @Nullable
