@@ -142,8 +142,42 @@ public class TimeDataProvider extends ContentProvider {
         return deletedItems;
     }
 
+
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues values,
+                      @Nullable String selection, @Nullable String[] selectionArgs) {
+        final int uriType = _URI_MATCHER.match(uri);
+        int updateItems = 0;
+        SQLiteDatabase db = _dbHelper.getWritableDatabase();
+
+        switch (uriType) {
+            case TimeDataTable.ITEM_LIST_ID:
+                updateItems = db.update(TimeDataTable.TABLE_NAME, values, selection, selectionArgs);
+                db.close();
+                break;
+             case TimeDataTable.ITEM_ID:
+                 final long id = ContentUris.parseId(uri);
+                 updateItems = db.update(TimeDataTable.TABLE_NAME, values, _ID_WHERE, idAsArray(id));
+
+                 // where is _ID_WHERE???
+
+                 db.close();
+                 break;
+
+            default:
+                throw new IllegalArgumentException(String.format(Locale.GERMANY, "Unbekannte Uris: %s", uri));
+
+        }
+
+        if (updateItems > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return updateItems;
     }
+
+    private String[] idAsArray(long id) {
+        return new String[]{String.valueOf(id)};
+    }
+
 }
