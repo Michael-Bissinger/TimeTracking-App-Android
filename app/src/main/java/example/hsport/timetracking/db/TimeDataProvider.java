@@ -7,6 +7,9 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Locale;
 
@@ -43,8 +46,9 @@ public class TimeDataProvider extends ContentProvider {
         return null;
     }
 
+    @Nullable
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
 
         // resolve uri
         final int uriType = _URI_MATCHER.match(uri);
@@ -63,8 +67,9 @@ public class TimeDataProvider extends ContentProvider {
         return type;
     }
 
+    @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
 
         // resolve uri
         final int uriType = _URI_MATCHER.match(uri);
@@ -101,8 +106,40 @@ public class TimeDataProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+
+        final int uriType = _URI_MATCHER.match(uri);
+        int deletedItems = 0;
+        SQLiteDatabase db = _dbHelper.getWritableDatabase();
+
+
+        // Determine action depending on uri
+        switch (uriType) {
+            case TimeDataTable.ITEM_LIST_ID:
+                deletedItems = db.delete(TimeDataTable.TABLE_NAME, selection, selectionArgs);
+                db.close();
+                break;
+
+            case TimeDataTable.ITEM_ID:
+                final long id = ContentUris.parseId(uri);
+                final String idWhere = BaseColumns._ID + "=?";
+                final String[] idArgs = new String[]{String.valueOf(id)};
+                deletedItems = db.delete(TimeDataTable.TABLE_NAME, idWhere, idArgs);
+                db.close();
+                break;
+
+             default:
+                 //unknown uri
+                 throw new IllegalArgumentException(String.format(Locale.GERMANY,
+                         "Unbekannte uri: %s", uri));
+        }
+
+        // Datasets successfully deleted
+        if (deletedItems > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return deletedItems;
     }
 
     @Override
