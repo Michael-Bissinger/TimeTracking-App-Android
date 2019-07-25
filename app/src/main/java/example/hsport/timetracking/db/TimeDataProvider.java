@@ -25,8 +25,12 @@ public class TimeDataProvider extends ContentProvider {
 
     }
 
+    private DbHelper _dbHelper = null;
+
     @Override
     public boolean onCreate() {
+        _dbHelper = new DbHelper(getContext());
+
         return false;
     }
 
