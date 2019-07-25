@@ -31,7 +31,7 @@ public class TimeDataProvider extends ContentProvider {
     public boolean onCreate() {
         _dbHelper = new DbHelper(getContext());
 
-        return false;
+        return true;
     }
 
     @Override
@@ -41,7 +41,22 @@ public class TimeDataProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+
+        // resolve uri
+        final int uriType = _URI_MATCHER.match(uri);
+        String type = null;
+
+        // Determine datatype
+        switch (uriType) {
+            case TimeDataTable.ITEM_LIST_ID:
+                type = TimeDataContract.TimeData.CONTENT_TYPE;
+                break;
+
+            case TimeDataTable.ITEM_ID:
+                type = TimeDataContract.TimeData.CONTENT_ITEM_TYPE;
+                break;
+        }
+        return type;
     }
 
     @Override
