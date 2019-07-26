@@ -136,4 +136,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    class EndButtonClick implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            // Current time
+            Calendar currentTime = Calendar.getInstance();
+
+        }
+
+    }
 }
