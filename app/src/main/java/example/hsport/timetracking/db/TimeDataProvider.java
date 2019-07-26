@@ -30,10 +30,18 @@ public class TimeDataProvider extends ContentProvider {
                 TimeDataContract.TimeData.CONTENT_DIRECTORY + "/#",
                 TimeDataTable.ITEM_ID);
 
+        _URI_MATCHER.addURI(
+                TimeDataContract.AUTHORITY,
+                TimeDataContract.TimeData.NOT_FINISHED_CONTENT_DIRECTORY,
+                TimeDataTable.NOT_FINISHED_ITEM_ID);
+
     }
 
     private DbHelper _dbHelper = null;
     private static final String _ID_WHERE = BaseColumns._ID + "=?";
+    private static final String _NOT_FINISHED_WHERE = "IFNULL("
+            + TimeDataContract.TimeData.Columns.END_TIME
+            + ",'')=''";
 
     @Override
     public boolean onCreate() {
@@ -48,8 +56,10 @@ public class TimeDataProvider extends ContentProvider {
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         final int uriType = _URI_MATCHER.match(uri);
+        final long id = ContentUris.parseId(uri);
         Cursor data;
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
+
 
         switch (uriType) {
             case TimeDataTable.ITEM_LIST_ID:
@@ -58,10 +68,16 @@ public class TimeDataProvider extends ContentProvider {
                 break;
 
             case TimeDataTable.ITEM_ID:
-                final long id = ContentUris.parseId(uri);
+                //final long id = ContentUris.parseId(uri);
                 data = db.query(TimeDataTable.TABLE_NAME, projection, _ID_WHERE, idAsArray(id),
                         null, null, null);
                 break;
+
+            case TimeDataTable.NOT_FINISHED_ITEM_ID:
+                data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, idAsArray(id),
+                        null, null, null);
+                break;
+
 
             default:
                 throw new IllegalArgumentException(String.format(Locale.GERMANY,
@@ -90,6 +106,7 @@ public class TimeDataProvider extends ContentProvider {
                 break;
 
             case TimeDataTable.ITEM_ID:
+            case TimeDataTable.NOT_FINISHED_ITEM_ID:
                 type = TimeDataContract.TimeData.CONTENT_ITEM_TYPE;
                 break;
         }
@@ -110,6 +127,7 @@ public class TimeDataProvider extends ContentProvider {
         switch (uriType) {
             case TimeDataTable.ITEM_LIST_ID:
             case TimeDataTable.ITEM_ID:
+            case TimeDataTable.NOT_FINISHED_ITEM_ID:
                 SQLiteDatabase db = _dbHelper.getWritableDatabase();
                 newItemId = db.insert(TimeDataTable.TABLE_NAME, null, values);
                 db.close();
@@ -138,6 +156,10 @@ public class TimeDataProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
 
         final int uriType = _URI_MATCHER.match(uri);
+        final String idWhere = BaseColumns._ID + "=?";
+        final String[] idArgs = new String[]{String.valueOf(id)};
+
+        final long id = ContentUris.parseId(uri);
         int deletedItems = 0;
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
 
@@ -150,12 +172,20 @@ public class TimeDataProvider extends ContentProvider {
                 break;
 
             case TimeDataTable.ITEM_ID:
-                final long id = ContentUris.parseId(uri);
-                final String idWhere = BaseColumns._ID + "=?";
-                final String[] idArgs = new String[]{String.valueOf(id)};
+                //final long id = ContentUris.parseId(uri);
+                //final String idWhere = BaseColumns._ID + "=?";
+                //final String[] idArgs = new String[]{String.valueOf(id)};
                 deletedItems = db.delete(TimeDataTable.TABLE_NAME, idWhere, idArgs);
                 db.close();
                 break;
+
+            case TimeDataTable.NOT_FINISHED_ITEM_ID:
+
+                deletedItems = db.delete(TimeDataTable.TABLE_NAME, idWhere, idArgs);
+                db.close();
+
+                break;
+
 
              default:
                  //unknown uri
@@ -191,6 +221,12 @@ public class TimeDataProvider extends ContentProvider {
                  // where is _ID_WHERE???
 
                  db.close();
+                 break;
+
+             case TimeDataTable.NOT_FINISHED_ITEM_ID:
+                 updateItems = db.update(TimeDataTable.TABLE_NAME, values, _NOT_FINISHED_WHERE, null);
+                 db.close();
+
                  break;
 
             default:
