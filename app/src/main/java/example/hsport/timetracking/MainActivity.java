@@ -44,42 +44,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        _startCommand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Startbutton geklickt!", Toast.LENGTH_SHORT).show();
+        _startCommand.setOnClickListener(new StartButtonClicked());
 
 
-                Calendar currentTime = Calendar.getInstance();
-                _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
-
-                // Init database and dbhelper
-                DbHelper dbHelper = new DbHelper(getApplicationContext());
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-                // Prepare what is gonna be written in the database
-                DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
-
-                ContentValues values = new ContentValues();
-                //values.put("start_time", currentTime.getTime().toString());
-
-                values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
-
-
-                // Actually put stuff in the database
-                db.insert(
-                        "time_data",
-                        null,
-                        values
-                );
-
-                // Close the database to save memory
-                db.close();
-                dbHelper.close();
-
-
-            }
-        });
+//        _startCommand.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Startbutton geklickt!", Toast.LENGTH_SHORT).show();
+//
+//
+//                Calendar currentTime = Calendar.getInstance();
+//                _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
+//
+//                // Init database and dbhelper
+//                DbHelper dbHelper = new DbHelper(getApplicationContext());
+//                SQLiteDatabase db = dbHelper.getWritableDatabase();
+//
+//                // Prepare what is gonna be written in the database
+//                DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
+//
+//                ContentValues values = new ContentValues();
+//                //values.put("start_time", currentTime.getTime().toString());
+//
+//                values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
+//
+//
+//                // Actually put stuff in the database
+//                db.insert(
+//                        "time_data",
+//                        null,
+//                        values
+//                );
+//
+//                // Close the database to save memory
+//                db.close();
+//                dbHelper.close();
+//
+//
+//            }
+//        });
 
 
         _endCommand.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +105,46 @@ public class MainActivity extends AppCompatActivity {
 
         _startCommand.setOnClickListener(null);
         _endCommand.setOnClickListener(null);
+
+
+    }
+
+    class StartButtonClicked implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+            Toast.makeText(MainActivity.this, "Startbutton geklickt!", Toast.LENGTH_SHORT).show();
+
+
+            Calendar currentTime = Calendar.getInstance();
+            _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
+
+            // Init database and dbhelper
+            DbHelper dbHelper = new DbHelper(getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            // Prepare what is gonna be written in the database
+            DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
+
+            ContentValues values = new ContentValues();
+            //values.put("start_time", currentTime.getTime().toString());
+
+            values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
+
+
+            // Actually put stuff in the database
+            db.insert(
+                    "time_data",
+                    null,
+                    values
+            );
+
+            // Close the database to save memory
+            db.close();
+            dbHelper.close();
+
+        }
+
 
 
     }
