@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         _startCommand.setOnClickListener(new StartButtonClicked());
-
+        _endCommand.setOnClickListener(new EndButtonClick());
 
 //        _startCommand.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -86,17 +86,17 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        _endCommand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Beenden geklickt!", Toast.LENGTH_SHORT).show();
-
-
-                Calendar currentTime = Calendar.getInstance();
-                _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
-
-            }
-        });
+//        _endCommand.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this, "Beenden geklickt!", Toast.LENGTH_SHORT).show();
+//
+//
+//                Calendar currentTime = Calendar.getInstance();
+//                _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
+//
+//            }
+//        });
 
     }
 
