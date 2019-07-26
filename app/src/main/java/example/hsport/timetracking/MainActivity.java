@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class StartButtonClicked implements View.OnClickListener {
+
         @Override
         public void onClick(View v) {
 

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:authorities="example.hsport.timetracking"
+            android:authorities="example.hsport.timetracking.provider"
             android:name=".db.TimeDataProvider" />
     </application>
 
