@@ -155,11 +155,12 @@ public class TimeDataProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
 
+        final long id = ContentUris.parseId(uri);
         final int uriType = _URI_MATCHER.match(uri);
         final String idWhere = BaseColumns._ID + "=?";
         final String[] idArgs = new String[]{String.valueOf(id)};
 
-        final long id = ContentUris.parseId(uri);
+
         int deletedItems = 0;
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
 
