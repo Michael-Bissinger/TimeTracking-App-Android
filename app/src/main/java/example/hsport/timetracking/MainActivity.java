@@ -144,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
             // Current time
             Calendar currentTime = Calendar.getInstance();
 
+            // Convert for db
+            String dbTime = TimeDataContract.Converter.format(currentTime);
+
+            // Time for db
+            ContentValues values = new ContentValues();
+            values.put(TimeDataContract.TimeData.Columns.END_TIME, dbTime);
+
+            // Save in db
+            getContentResolver().update(TimeDataContract.TimeData.NOT_FINISHED_CONTENT_URI,
+                    values, null, null);
+
+            // Output for UI
+            _endDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
+
         }
 
     }
