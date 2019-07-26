@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import example.hsport.timetracking.db.DbHelper;
+import example.hsport.timetracking.db.TimeDataContract;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -115,33 +116,21 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(MainActivity.this, "Startbutton geklickt!", Toast.LENGTH_SHORT).show();
 
-
+            // Get current time
             Calendar currentTime = Calendar.getInstance();
-            _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
-            // Init database and dbhelper
-            DbHelper dbHelper = new DbHelper(getApplicationContext());
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            // Convert for db
+            String dbTime = TimeDataContract.Converter.format(currentTime);
 
-            // Prepare what is gonna be written in the database
-            DateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.GERMANY);
-
+            // Time for db
             ContentValues values = new ContentValues();
-            //values.put("start_time", currentTime.getTime().toString());
+            values.put(TimeDataContract.TimeData.Columns.START_TIME, dbTime);
 
-            values.put("start_time", dbFormat.format(currentTime.getTime())); //better way of getting the time but not working
+            // Save into db
+            getContentResolver().insert(TimeDataContract.TimeData.CONTENT_URI, values);
 
-
-            // Actually put stuff in the database
-            db.insert(
-                    "time_data",
-                    null,
-                    values
-            );
-
-            // Close the database to save memory
-            db.close();
-            dbHelper.close();
+            // Show in UI
+            _startDateTime.setText(_dateTimeFormatter.format(currentTime.getTime()));
 
         }
 
