@@ -21,6 +21,10 @@ public final class TimeDataContract {
         // directory for data
         public static final String CONTENT_DIRECTORY = "time";
 
+        // directory for open datasets
+        public static final String NOT_FINISHED_CONTENT_DIRECTORY =
+                CONTENT_DIRECTORY + "/not_finished";
+
         // Uri for the data
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_DIRECTORY);
 
@@ -29,6 +33,10 @@ public final class TimeDataContract {
 
         // Datatype for a single set of data
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_DIRECTORY;
+
+        // URI for not yet finished data
+        public static final Uri NOT_FINISHED_CONTENT_URI =
+                Uri.withAppendedPath(AUTHORITY_URI, NOT_FINISHED_CONTENT_DIRECTORY);
 
         public interface Columns extends BaseColumns {
             String START_TIME = "start_time";
