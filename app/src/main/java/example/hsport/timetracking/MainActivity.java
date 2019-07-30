@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         _startCommand = findViewById(R.id.StartCommand);
         _endCommand = findViewById(R.id.EndCommand);
 
+        _startDateTime.setKeyListener(null);
+        _endDateTime.setKeyListener(null);
+
     }
 
     @Override
