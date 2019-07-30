@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -61,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null);
 
+        // Check if data is available
+        if (data.moveToFirst()) {
+            try {
+                Calendar startTime = TimeDataContract.Converter.parse(data.getString((0));
+                _startDateTime.setText(_dateTimeFormatter.format(startTime.getTime()));
+            } catch (ParseException e) {
+                // Error while converting starttime
+                _startDateTime.setText("Falsches Datumformat in der Datenbank");
+            }
+        }
 
 
     }
