@@ -41,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initFromDb() {
+        // Deactivate buttons
+        _startCommand.setEnabled(false);
+        _endCommand.setEnabled(false);
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

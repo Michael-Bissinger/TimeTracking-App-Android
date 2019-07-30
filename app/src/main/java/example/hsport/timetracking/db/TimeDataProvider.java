@@ -50,6 +50,8 @@ public class TimeDataProvider extends ContentProvider {
         return true;
     }
 
+
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
