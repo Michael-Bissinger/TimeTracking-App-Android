@@ -1,6 +1,7 @@
 package example.hsport.timetracking;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,10 +42,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initFromDb();
+    }
+
     private void initFromDb() {
         // Deactivate buttons
         _startCommand.setEnabled(false);
         _endCommand.setEnabled(false);
+
+        // See if there is an open dataset (means, that end should be enabled)
+        Cursor data = getContentResolver().query(
+                TimeDataContract.TimeData.NOT_FINISHED_CONTENT_URI,
+                new String[]{TimeDataContract.TimeData.Columns.START_TIME},
+                null,
+                null,
+                null);
+
+
 
     }
 
