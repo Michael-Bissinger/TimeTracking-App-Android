@@ -71,7 +71,18 @@ public class MainActivity extends AppCompatActivity {
                 // Error while converting starttime
                 _startDateTime.setText("Falsches Datumformat in der Datenbank");
             }
+            // Activate endbuttom
+            _endDateTime.setText("");
+            _endCommand.setEnabled(true);
+        } else {
+            // Activate startbutton
+            _startDateTime.setText("");
+            _endDateTime.setText("");
+            _startCommand.setEnabled(true);
         }
+
+        // Close db
+        data.close();
 
 
     }
