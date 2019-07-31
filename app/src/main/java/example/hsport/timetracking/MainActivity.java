@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if data is available
         if (data.moveToFirst()) {
             try {
-                Calendar startTime = TimeDataContract.Converter.parse(data.getString((0)));
+                Calendar startTime = TimeDataContract.Converter.parse(data.getString(0));
                 _startDateTime.setText(_dateTimeFormatter.format(startTime.getTime()));
             } catch (ParseException e) {
                 // Error while converting starttime
