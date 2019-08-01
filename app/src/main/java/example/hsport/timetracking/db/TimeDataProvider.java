@@ -65,20 +65,17 @@ public class TimeDataProvider extends ContentProvider {
 
         switch (uriType) {
             case TimeDataTable.ITEM_LIST_ID:
-                data = db.query(TimeDataTable.TABLE_NAME, projection, selection, selectionArgs,
-                        null, null, sortOrder);
+                data = db.query(TimeDataTable.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
 
             case TimeDataTable.ITEM_ID:
-                //final long id = ContentUris.parseId(uri);
-                data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, null,
-                        null, null, sortOrder);
+                final long id = ContentUris.parseId(uri);
+                data = db.query(TimeDataTable.TABLE_NAME, projection, _ID_WHERE, idAsArray(id), null, null, null);
                 break;
 
-            //case TimeDataTable.NOT_FINISHED_ITEM_ID:
-            //    data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, idAsArray(id),
-            //            null, null, null);
-            //    break;
+            case TimeDataTable.NOT_FINISHED_ITEM_ID:
+                data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, null, null, null, sortOrder);
+                break;
 
 
             default:
