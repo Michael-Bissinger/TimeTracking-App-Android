@@ -58,7 +58,7 @@ public class TimeDataProvider extends ContentProvider {
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
         final int uriType = _URI_MATCHER.match(uri);
-        final long id = ContentUris.parseId(uri);
+        //final long id = ContentUris.parseId(uri);
         Cursor data;
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
 
@@ -71,14 +71,14 @@ public class TimeDataProvider extends ContentProvider {
 
             case TimeDataTable.ITEM_ID:
                 //final long id = ContentUris.parseId(uri);
-                data = db.query(TimeDataTable.TABLE_NAME, projection, _ID_WHERE, idAsArray(id),
-                        null, null, null);
+                data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, null,
+                        null, null, sortOrder);
                 break;
 
-            case TimeDataTable.NOT_FINISHED_ITEM_ID:
-                data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, idAsArray(id),
-                        null, null, null);
-                break;
+            //case TimeDataTable.NOT_FINISHED_ITEM_ID:
+            //    data = db.query(TimeDataTable.TABLE_NAME, projection, _NOT_FINISHED_WHERE, idAsArray(id),
+            //            null, null, null);
+            //    break;
 
 
             default:
@@ -157,10 +157,10 @@ public class TimeDataProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
 
-        final long id = ContentUris.parseId(uri);
+        //final long id = ContentUris.parseId(uri);
         final int uriType = _URI_MATCHER.match(uri);
-        final String idWhere = BaseColumns._ID + "=?";
-        final String[] idArgs = new String[]{String.valueOf(id)};
+        //final String idWhere = BaseColumns._ID + "=?";
+        //final String[] idArgs = new String[]{String.valueOf(id)};
 
 
         int deletedItems = 0;
@@ -175,18 +175,17 @@ public class TimeDataProvider extends ContentProvider {
                 break;
 
             case TimeDataTable.ITEM_ID:
-                //final long id = ContentUris.parseId(uri);
+                final long id = ContentUris.parseId(uri);
                 //final String idWhere = BaseColumns._ID + "=?";
                 //final String[] idArgs = new String[]{String.valueOf(id)};
-                deletedItems = db.delete(TimeDataTable.TABLE_NAME, idWhere, idArgs);
+                deletedItems = db.delete(TimeDataTable.TABLE_NAME, _ID_WHERE, idAsArray(id));
                 db.close();
                 break;
 
             case TimeDataTable.NOT_FINISHED_ITEM_ID:
 
-                deletedItems = db.delete(TimeDataTable.TABLE_NAME, idWhere, idArgs);
+                deletedItems = db.delete(TimeDataTable.TABLE_NAME, _NOT_FINISHED_WHERE, null);
                 db.close();
-
                 break;
 
 
